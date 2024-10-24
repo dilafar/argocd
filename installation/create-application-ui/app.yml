@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: color-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sid/app-1.git
+    targetRevision: HEAD
+    path: team-a/color
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: color
+  syncPolicy:
+    automated:
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=true

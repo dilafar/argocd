@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: heliocentric-model-no-pluto-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/dilafar/argocd.git
+    targetRevision: HEAD
+    path: ./declerative-app-of-apps/manifests/heliocentric-model-no-pluto
+   
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: heliocentric-no-pluto
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true  
+    automated:
+      prune: true
+      selfHeal: false
